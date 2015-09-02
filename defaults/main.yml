@@ -1,0 +1,49 @@
+---
+## key pair to use on the instance default is username
+aws_ec2_keypair           : "{{ lookup('env','USER') }}"
+
+## AWS access key. If not set then the value of the
+## AWS_ACCESS_KEY_ID, AWS_ACCESS_KEY or EC2_ACCESS_KEY environment variable is used.
+#aws_ec2access_key        : "blaaablaaa"
+
+## AWS secret key. If not set then the value of the
+## AWS_SECRET_ACCESS_KEY, AWS_SECRET_KEY, or EC2_SECRET_KEY  environment variable is used.
+#aws_ec2_secret_key        : "moreblabla"
+
+# [ eu-central-1": Frankfurt, "eu-west-1": "Ireland", "us-west-2": "Oregon", "us-east-1":N. Virigina, "ap-southeast-1": Singapour]
+aws_ec2_region            : "eu-west-1"
+aws_ec2_instances_name    : "{{ inventory_hostname }}"
+
+# security groups (or list of groups) to use with the instance
+# You could use by name or ID but try not to use both
+## security group name
+aws_ec2_group             : "default"
+#aws_ec2_group_id          : "1231312312"
+
+# instance type to use for the instance, see http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-types.html
+aws_ec2_instance_type     : "t1.micro"
+
+# ami ID to use for the instance
+aws_ec2_image             : "ami-5da23a2a"
+
+# The number of computers to provision
+aws_ec2_exact_count       : "1"
+
+# Used with 'exact_count' to determine how many nodes based on a specific tag criteria should be running
+# Dont worry about it if you have same tags for all machnines
+aws_ec2_tag_group_name    : "webserver"
+aws_ec2_count_tag         :
+        Name              : "{{ aws_ec2_instances_name }}"
+        Group             : "{{ aws_ec2_tag_group_name }} "
+
+aws_ec2_instance_tags     : "{{ aws_ec2_count_tag }}"
+
+# wait for the instance to be 'running' before returning. Does not wait for SSH,
+aws_ec2_wait              : "true"
+# After provioning should we wait for ssh or winrm to be responsive
+aws_ec2_connection_wait    : True
+aws_ec2_connection_delay   : 1
+aws_ec2_connection_timeout : 500
+
+##  Command to run on provisioning
+#aws_ec2_user_data_

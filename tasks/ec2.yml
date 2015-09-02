@@ -1,0 +1,35 @@
+---
+# - name: provision | Print aws_ec2_user_data varaible
+#  debug: var=aws_ec2_user_data
+
+- name: ec2 | Provision a set of instances
+  ec2:
+     group: "{{ aws_ec2_group | default(omit) }}"
+     group_id: "{{ aws_ec2_group_id | default(omit) }}"
+     instance_type: "{{ aws_ec2_instance_type }}"
+     image: "{{ aws_ec2_image }}"
+     region: "{{ aws_ec2_region }}"
+     wait: "{{ aws_ec2_wait | default(omit) }}"
+     exact_count: "{{ aws_ec2_exact_count | default(omit) }}"
+     count_tag: "{{ aws_ec2_count_tag | default(omit) }}"
+     keypair: "{{ aws_ec2_keypair  | default(omit) }}"
+     user_data: "{{ aws_ec2_user_data | default(omit) }} "
+     instance_tags: "{{ aws_ec2_instance_tags | default(omit) }}"
+     aws_ec2_access_key: "{{ aws_ec2_access_key | default(omit) }}"
+     aws_ec2_secret_key: "{{ aws_ec2_secret_key | default(omit) }}"
+  register: ec2
+
+# Todo:
+# 1- multi count issue, should loop if not one 2 one mappining
+# 2- Might need change to private interface or custom
+- name: ec2 | Waiting for ssh port to open
+  wait_for:
+    port="{{ ansible_ssh_port | default('22') }}"
+    host="{{ ec2.tagged_instances[0].public_dns_name }}"
+    delay="{{ aws_ec2_connection_delay }}"
+    timeout="{{ aws_ec2_connection_timeout }}"
+  when: aws_ec2_connection_wait is defined and aws_ec2_connection_wait
+
+- name: ec2 | set facts for ansible_ssh_host
+  set_fact:
+    ansible_ssh_host: "{{ ec2.tagged_instances[0].public_ip }}"
