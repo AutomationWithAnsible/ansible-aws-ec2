@@ -1,6 +1,4 @@
 ---
-# - name: provision | Print aws_ec2_user_data varaible
-#  debug: var=aws_ec2_user_data
 
 - name: ec2 | Provision a set of instances
   ec2:
