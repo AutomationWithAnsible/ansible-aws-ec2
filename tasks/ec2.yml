@@ -17,19 +17,4 @@
      instance_tags: "{{ aws_ec2_instance_tags | default(omit) }}"
      aws_ec2_access_key: "{{ aws_ec2_access_key | default(omit) }}"
      aws_ec2_secret_key: "{{ aws_ec2_secret_key | default(omit) }}"
-  register: ec2
-
-# Todo:
-# 1- multi count issue, should loop if not one 2 one mappining
-# 2- Might need change to private interface or custom
-- name: ec2 | Waiting for ssh port to open
-  wait_for:
-    port="{{ ansible_ssh_port | default('22') }}"
-    host="{{ ec2.tagged_instances[0].public_dns_name }}"
-    delay="{{ aws_ec2_connection_delay }}"
-    timeout="{{ aws_ec2_connection_timeout }}"
-  when: aws_ec2_connection_wait is defined and aws_ec2_connection_wait
-
-- name: ec2 | set facts for ansible_ssh_host
-  set_fact:
-    ansible_ssh_host: "{{ ec2.tagged_instances[0].public_ip }}"
+  register: ec2_server

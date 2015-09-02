@@ -44,6 +44,10 @@ aws_ec2_wait              : "true"
 aws_ec2_connection_wait    : True
 aws_ec2_connection_delay   : 1
 aws_ec2_connection_timeout : 500
+#aws_ec2_connection_string  : "OpenSSH"
 
 ##  Command to run on provisioning
-#aws_ec2_user_data_
+#aws_ec2_user_data: "sudo apt-get install python-pip"
+
+#Default user to use if failed to use your user
+aws_ec2_default_user       : "ubuntu"
