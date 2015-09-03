@@ -13,7 +13,9 @@
      keypair: "{{ aws_ec2_keypair  | default(omit) }}"
      user_data: "{{ aws_ec2_user_data | default(omit) }} "
      instance_tags: "{{ aws_ec2_instance_tags | default(omit) }}"
-     assign_public_ip: "{{ aws_ec2_assign_public_ip | default(omit) }}" 
+     assign_public_ip: "{{ aws_ec2_assign_public_ip | default(omit) }}"
+     vpc_subnet_id: "{{ aws_ec2_vpc_subnet_id | default(omit) }}"
+     zone: "{{ aws_ec2_zone | default(omit) }}"
      aws_ec2_access_key: "{{ aws_ec2_access_key | default(omit) }}"
      aws_ec2_secret_key: "{{ aws_ec2_secret_key | default(omit) }}"
   register: ec2_server
