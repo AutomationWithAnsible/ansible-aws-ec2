@@ -29,6 +29,9 @@ aws_ec2_image             : "ami-5da23a2a"
 # The number of computers to provision
 aws_ec2_exact_count       : "1"
 
+# Assign a public IP address
+aws_ec2_assign_public_ip  : yes
+
 # Used with 'exact_count' to determine how many nodes based on a specific tag criteria should be running
 # Dont worry about it if you have same tags for all machnines
 aws_ec2_tag_group_name    : "webserver"
