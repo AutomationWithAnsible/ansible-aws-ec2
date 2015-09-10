@@ -11,7 +11,7 @@ aws_ec2_keypair                 : "{{ lookup('env','USER') }}"
 #aws_ec2_secret_key        : "moreblabla"
 
 # [ eu-central-1": Frankfurt, "eu-west-1": "Ireland", "us-west-2": "Oregon", "us-east-1":N. Virigina, "ap-southeast-1": Singapour]
-aws_ec2_region                  : "eu-west-1"
+aws_ec2_region                  : "{{ aws_region | default('eu-west-1') }}"
 aws_ec2_instances_name          : "{{ inventory_hostname }}"
 
 # security groups (or list of groups) to use with the instance
@@ -47,7 +47,7 @@ aws_ec2_wait                     : "true"
 aws_ec2_connection_wait          : True
 aws_ec2_connection_delay         : 1
 aws_ec2_connection_timeout_misc  : 5
-aws_ec2_connection_timeout       : 200
+aws_ec2_connection_timeout       : 120
 #aws_ec2_connection_string        : "OpenSSH"
 
 ##  Command to run on provisioning
@@ -55,3 +55,9 @@ aws_ec2_connection_timeout       : 200
 
 #Default user to use if failed to use your user
 aws_ec2_default_user             : "ubuntu"
+
+# Check if DNS match Public or Private IP from AWS ec2
+aws_ec2_check_negative_cache    : true
+
+# By default we assume we have no negative caching
+aws_ec2_negative_cache_problem   : false
