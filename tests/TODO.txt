@@ -1,0 +1,7 @@
+# https://github.com/spulec/moto
+
+- ansible_ssh_host is set to "192.168.1.1"
+  Ignore all other steps must be skipped
+
+  ansible_ssh_host must be == 192.168.1.1
+

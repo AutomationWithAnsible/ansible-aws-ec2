@@ -52,7 +52,7 @@ aws_ec2_connection_wait_public   : True
 
 aws_ec2_connection_delay         : 1
 aws_ec2_connection_timeout_misc  : 5
-aws_ec2_connection_timeout       : 120
+aws_ec2_connection_timeout       : 160
 #aws_ec2_connection_string        : "OpenSSH"
 
 ##  Command to run on provisioning
