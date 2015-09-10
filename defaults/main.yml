@@ -44,7 +44,12 @@ aws_ec2_instance_tags            : "{{ aws_ec2_count_tag }}"
 # wait for the instance to be 'running' before returning. Does not wait for SSH,
 aws_ec2_wait                     : "true"
 # After provioning should we wait for ssh or winrm to be responsive
-aws_ec2_connection_wait          : True
+aws_ec2_connection_wait          : true
+# By default you can wait for private
+aws_ec2_connection_wait_private  : true
+# By default you can wait for public
+aws_ec2_connection_wait_public   : True
+
 aws_ec2_connection_delay         : 1
 aws_ec2_connection_timeout_misc  : 5
 aws_ec2_connection_timeout       : 120

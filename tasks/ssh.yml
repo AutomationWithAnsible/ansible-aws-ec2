@@ -39,7 +39,7 @@
     search_regex="{{ aws_ec2_connection_string | default(omit) }}"
   register: fqdn_2_working
   ignore_errors: yes
-  when: ansible_ssh_1_working | skipped or ansible_ssh_1_working | failed  or not aws_ec2_negative_cache_problem 
+  when: ansible_ssh_1_working | skipped or ansible_ssh_1_working | failed or not aws_ec2_negative_cache_problem 
 
 # At this point letst start falling back to defaults 
 - name: ssh | 3. Set ansible_ssh_user to default
@@ -61,13 +61,12 @@
     search_regex="{{ aws_ec2_connection_string | default(omit) }}"
   register: private_ip_3_working
   ignore_errors: yes
-  when: fqdn_2_working | failed
-  #ec2_server | changed or
+  when: fqdn_2_working | failed and aws_ec2_connection_wait_private
 
 - name: ssh | 4. Set ansible_ssh_host to Public IP for initial communication (to avoid DNS delay) and default user
   set_fact:
     ansible_ssh_host: "{{ aws_public_ip }}"
-  when: private_ip_3_working | failed
+  when: ( private_ip_3_working | failed or fqdn_2_working | failed ) and aws_ec2_connection_wait_public
 
 # If we reach this point and unable to connect than it will fail
 - name: ssh | 4. Wait for ssh port to open on ec2 public IP
@@ -77,4 +76,4 @@
     delay="{{ aws_ec2_connection_delay }}"
     timeout="{{ aws_ec2_connection_timeout_misc }}"
     search_regex="{{ aws_ec2_connection_string | default(omit) }}"
-  when: private_ip_3_working | failed
+  when: ( private_ip_3_working | failed or fqdn_2_working | failed ) and aws_ec2_connection_wait_public
