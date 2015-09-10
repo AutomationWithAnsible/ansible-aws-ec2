@@ -63,7 +63,7 @@
   ignore_errors: yes
   when: (fqdn_2_working | failed or fqdn_2_working | skipped) and aws_ec2_connection_wait_private
 
-- name: ssh | 4. Set ansible_ssh_host to Public IP for initial communication (to avoid DNS delay) and default user
+- name: ssh | 4. Set ansible_ssh_host to Public IP for initial communication (to avoid DNS delay)
   set_fact:
     ansible_ssh_host: "{{ aws_public_ip }}"
   when: ( private_ip_3_working | failed or private_ip_3_working | skipped and aws_ec2_connection_wait_private) or ( fqdn_2_working | failed or fqdn_2_working | skipped ) and aws_ec2_connection_wait_public
