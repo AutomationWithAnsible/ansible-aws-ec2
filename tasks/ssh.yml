@@ -12,7 +12,7 @@
 - name: ssh | Resolve FQDN
   set_fact:
     fqdn_resolved: "{{ lookup('dig', inventory_hostname) }}"
-  when: aws_ec2_check_negative_cache 
+  when: aws_ec2_check_negative_cache
 
 - name: ssh | 1. Waiting for ssh port to open ansible_ssh_host
   wait_for:
@@ -25,10 +25,10 @@
   ignore_errors: yes
   when: ansible_ssh_host is defined
 
-- name: ssh | 2. Check for negative caching
+- name: ssh | Check for negative caching
   set_fact:
     aws_ec2_negative_cache_problem : true
-  when: aws_ec2_check_negative_cache and aws_public_ip != fqdn_resolved and aws_private_ip != fqdn_resolved 
+  when: aws_ec2_check_negative_cache and aws_public_ip != fqdn_resolved and aws_private_ip != fqdn_resolved
 
 - name: ssh | 2. Wait for ssh port to open on FQDN "inventory_hostname"
   wait_for:
@@ -39,9 +39,9 @@
     search_regex="{{ aws_ec2_connection_string | default(omit) }}"
   register: fqdn_2_working
   ignore_errors: yes
-  when: ( ansible_ssh_1_working | skipped or ansible_ssh_1_working | failed ) and not aws_ec2_negative_cache_problem 
+  when: ( ansible_ssh_1_working | skipped or ansible_ssh_1_working | failed ) and not aws_ec2_negative_cache_problem
 
-# At this point letst start falling back to defaults 
+# At this point lets start falling back to defaults
 - name: ssh | (Fallback) Set ansible_ssh_user to default
   set_fact:
       ansible_ssh_user: "{{ aws_ec2_default_user }}"
