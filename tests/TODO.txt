@@ -1,7 +1,40 @@
 # https://github.com/spulec/moto
 
-- ansible_ssh_host is set to "192.168.1.1"
-  Ignore all other steps must be skipped
+# Test all features are enabled
 
+- name: ansible ssh host is defined by IP
+ansible_ssh_host is set to "192.168.1.1"
+Given:
+  192.168.1.1 is accessible on the defined port
+Expected Results:
   ansible_ssh_host must be == 192.168.1.1
+  ansible_ssh_user must be == $user
 
+- name: inventory_hostname is resolvable
+inventory_hostname = 2.foo.net and ansible_ssh_host is not set
+Given:
+ - 2.foo.net is accessible on the defined port
+ - 2.foo.net is resolvable
+ Expected Results:
+  ansible_ssh_user must be == $users
+  ansible_ssh_host must be empty
+
+- name: inventory_hostname is NOT resolvable
+inventory_hostname = 3.foo.net
+ansible_ssh_host is not set
+3.foo.net is not resolvable
+Given:
+ - resolvable_3.foo.net private IP is accessible on the defined port
+Expected Results:
+  ansible_ssh_host = private ip
+
+
+- name: inventory_hostname is NOT resolvable and private IP is not accessible
+inventory_hostname = 4.foo.net
+ansible_ssh_host is not set
+4.foo.net is not resolvable
+private IP is not accessible
+Given:
+ - 4.foo.net public IP is accessible on the defined port
+Expected Results:
+ ansible_ssh_host = public ip
