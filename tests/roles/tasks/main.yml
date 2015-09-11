@@ -1,0 +1,24 @@
+---
+
+
+- name: Install moto
+  easy_install: 
+    name=boto
+
+- name: Set Static IP if set
+  command: "sudo ifconfig eth0:0 {{ static_ip }}"
+  when: static_ip
+
+- name: Set Hosts file 
+  lineinfile: 
+    dest=/etc/hosts
+    regexp="{{ host_regx }}"
+    line='127.0.0.1 localhost'
+  when: host_reg is defined amd host_line is defined
+
+#host_regx: '^127\.0\.0\.1'
+#host_line: '127.0.0.1 localhost'
+
+#run ssh
+
+# run motos
