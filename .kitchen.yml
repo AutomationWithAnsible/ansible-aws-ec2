@@ -1,0 +1,26 @@
+---
+driver                 :
+    name               : vagrant 
+    #local 
+
+provisioner:
+    name               : ansible_push
+    verbose            : "vvvv"
+    ansible_config     : "tests/ansible.cfg"
+    idempotency_test   : True
+    sudo               : True
+
+
+platforms:
+    - name: ubuntu-14.04
+      driver:
+        box: ubuntu/trusty64
+    # - name                      : travis
+    #   provisioner               :
+    #     raw_arguments           : "-c local"
+
+suites: 
+  - name            : test1_ansible_ssh_host
+    provisioner     :
+        playbook    : "tests/application/test1_ansible_ssh_host.yml"
+
