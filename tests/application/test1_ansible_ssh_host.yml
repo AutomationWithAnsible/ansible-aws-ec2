@@ -1,0 +1,29 @@
+---
+
+# Scenario: The role Creates machine and connects to it via IP
+# Given 
+#      ansible_ssh_host is 192.168.1.1 and reachable
+#      port 22 is open and listening
+#      ansible_ssh_user is "test1"
+# Then 
+#     ansible_ssh_host must be == 192.168.1.1
+#     ansible_ssh_user must be == test1 
+
+
+
+
+- name         : Test 1 Ansible_ssh_host
+  hosts        : all
+  gather_facts : no
+  sudo         : True
+  connection   : "{{ kitchen_connection | default('local') }}"
+  vars         :
+                ansible_ssh_host: "192.168.1.1"
+  tasks        :
+        - name: Test
+          debug: msg="x"
+
+  # roles        :
+  #                - "ansible-aws-ec2"
+  # post_tasks   :
+  #      - 
