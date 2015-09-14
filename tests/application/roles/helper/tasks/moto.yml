@@ -1,0 +1,29 @@
+---
+
+- name: Install moto
+  easy_install: 
+    name=boto
+  connection: local
+  when: boto_install 
+
+- name: boto config file
+  copy:
+    src=boto_config
+    dest="{{ lookup('env', 'HOME') }}/.boto"
+  become: False
+  connection: local
+
+- name: boto initd 
+  template:
+    src=moto.sh
+    dest="/tmp/moto.sh"
+    mode=0755
+  become: False
+  connection: local
+
+- name: Run moto
+  shell: "/tmp/moto.sh"
+  changed_when: x.stdout.find('ok') != -1
+  register: x
+  become: False
+  connection: local

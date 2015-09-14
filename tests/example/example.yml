@@ -1,8 +1,0 @@
----
-
-- name: Provision for automation-jenkins group
-  hosts: example1
-  connection: local
-  gather_facts: False
-  roles:
-    - { role: ansible-aws-ec2 ,          tags: ["provision", "aws-ec2"] } # provision Machine(s) in ec2

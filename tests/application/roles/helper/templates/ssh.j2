@@ -4,4 +4,4 @@
 sudo netstat -antlp | grep netcats
 [ $? -eq 0 ] && echo "netcat running" && exit 0
 
-echo "OpenSSH" | nc -l {{ ssh_listen_ip }} {{ ssh_listen_port | default('22') }}"
+echo "{{ ssh_echo }}" | nc -l {{ ssh_listen_ip }} {{ ssh_listen_port | default('22') }}"
