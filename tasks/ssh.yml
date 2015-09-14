@@ -1,5 +1,4 @@
 ---
-
 # Todo:
 # 1- multi count issue, should loop if not one 2 one mappining
 # 2- Might need change to private interface or custom ec2 as it default uses public
@@ -66,7 +65,7 @@
 - name: ssh | 4. Set ansible_ssh_host to Public IP for initial communication (to avoid DNS delay)
   set_fact:
     ansible_ssh_host: "{{ aws_public_ip }}"
-  when: ( private_ip_3_working | failed or private_ip_3_working | skipped and aws_ec2_connection_wait_private) and ( fqdn_2_working | failed or fqdn_2_working | skipped ) and aws_ec2_connection_wait_public
+  when: ( private_ip_3_working | failed or private_ip_3_working | skipped ) and ( fqdn_2_working | failed or fqdn_2_working | skipped ) and aws_ec2_connection_wait_public 
 
 # If we reach this point and unable to connect than it will fail
 - name: ssh | 4. Wait for ssh port to open on ec2 public IP
@@ -76,4 +75,4 @@
     delay="{{ aws_ec2_connection_delay }}"
     timeout="{{ aws_ec2_connection_timeout }}"
     search_regex="{{ aws_ec2_connection_string | default(omit) }}"
-  when: ( private_ip_3_working | failed or private_ip_3_working | skipped and aws_ec2_connection_wait_private) and ( fqdn_2_working | failed or fqdn_2_working | skipped ) and aws_ec2_connection_wait_public
+  when: ( private_ip_3_working | failed or private_ip_3_working | skipped) and ( fqdn_2_working | failed or fqdn_2_working | skipped ) and aws_ec2_connection_wait_public
