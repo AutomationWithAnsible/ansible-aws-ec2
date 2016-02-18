@@ -17,20 +17,20 @@ aws_ec2_instances_name          : "{{ inventory_hostname }}"
 # security groups (or list of groups) to use with the instance
 # You could use by name or ID but try not to use both
 ## security group name
-aws_ec2_group                   : "default"
+aws_ec2_group                    : "default"
 #aws_ec2_group_id                : "1231312312"
 
 # instance type to use for the instance, see http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-types.html
-aws_ec2_instance_type           : "t1.micro"
+aws_ec2_instance_type            : "t1.micro"
 
 # ami ID to use for the instance
-aws_ec2_image                   : "ami-5da23a2a"
+aws_ec2_image                    : "ami-5da23a2a"
 
 # The number of computers to provision
-aws_ec2_exact_count             : "1"
+aws_ec2_exact_count              : "1"
 
 ## Assign a public IP address
-#aws_ec2_assign_public_ip  : yes
+#aws_ec2_assign_public_ip         : yes
 
 # Used with 'exact_count' to determine how many nodes based on a specific tag criteria should be running
 # Dont worry about it if you have same tags for all machnines
@@ -54,15 +54,26 @@ aws_ec2_connection_delay         : 1
 aws_ec2_connection_timeout_misc  : 5
 aws_ec2_connection_timeout       : 160
 #aws_ec2_connection_string        : "OpenSSH"
+aws_ec2_connection_host          : "{{ ansible_host | default(ansible_ssh_host) | default('') }}"
+aws_ec2_connection_port          : "{{ ansible_port | default(ansible_ssh_port) | default('') }}"
+aws_ec2_connection_port_default  : "22"
 
 ##  Command to run on provisioning
-#aws_ec2_user_data: "sudo apt-get install python-pip"
+#aws_ec2_user_data                : "sudo apt-get install python-pip"
 
 #Default user to use if failed to use your user
 aws_ec2_default_user             : "ubuntu"
 
 # Check if DNS match Public or Private IP from AWS ec2
-aws_ec2_check_negative_cache    : true
+aws_ec2_check_negative_cache     : true
 
 # By default we assume we have no negative caching
 aws_ec2_negative_cache_problem   : false
+
+
+# By default we assume all connection fails is false
+ansible_ssh_host_failed          : false
+ansible_fqdn_failed              : false
+ansible_private_failed           : false
+ansible_public_failed            : false
+

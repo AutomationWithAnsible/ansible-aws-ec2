@@ -1,0 +1,29 @@
+---
+driver                 :
+    name               : vagrant 
+    network:
+      - ["forwarded_port", {guest: 80, host: 8080}]
+      - ["private_network", {ip: "192.168.33.33"}]
+    #local 
+
+provisioner:
+    name               : ansible_push
+    verbose            : "vvvv"
+    ansible_config     : "tests/ansible.cfg"
+    idempotency_test   : False
+    sudo               : True
+    chef_bootstrap_url : ""
+
+platforms:
+    - name: ubuntu-14.04
+      driver:
+        box: ubuntu/trusty64
+    # - name                      : travis
+    #   provisioner               :
+    #     raw_arguments           : "-c local"
+
+suites: 
+  - name            : test1_ansible_ssh_host
+    provisioner     :
+        playbook    : "tests/application/test1_ansible_ssh_host.yml"
+

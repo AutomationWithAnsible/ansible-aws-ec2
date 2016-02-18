@@ -1,0 +1,8 @@
+---
+
+
+ssh_echo        : "OpenSSH"
+boto_install    : false
+host_regx       : '^127\.0\.0\.1'
+host_line       : '127.0.0.1 localhost'
+service         : "ec2"
