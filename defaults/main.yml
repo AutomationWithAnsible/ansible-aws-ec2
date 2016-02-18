@@ -48,7 +48,7 @@ aws_ec2_connection_wait          : true
 # By default you can wait for private
 aws_ec2_connection_wait_private  : true
 # By default you can wait for public
-aws_ec2_connection_wait_public   : True
+aws_ec2_connection_wait_public   : true
 
 aws_ec2_connection_delay         : 1
 aws_ec2_connection_timeout_misc  : 5
