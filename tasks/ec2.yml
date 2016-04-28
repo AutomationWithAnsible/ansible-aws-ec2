@@ -16,6 +16,8 @@
      assign_public_ip: "{{ aws_ec2_assign_public_ip | default(omit) }}"
      vpc_subnet_id: "{{ aws_ec2_vpc_subnet_id | default(omit) }}"
      zone: "{{ aws_ec2_zone | default(omit) }}"
+     volumes: "{{ aws_ec2_volumes | default(omit) }}"
+     monitoring: "{{ aws_ec2_monitoring | default(omit) }}"
      aws_ec2_access_key: "{{ aws_ec2_access_key | default(omit) }}"
      aws_ec2_secret_key: "{{ aws_ec2_secret_key | default(omit) }}"
   connection: local
