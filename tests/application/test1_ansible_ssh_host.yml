@@ -26,3 +26,8 @@
   roles        :
                  - { role: helper }
                  - { role: ansible-aws-ec2, ansible_ssh_host: "192.168.33.1", ansible_ssh_user: "test1", ansible_ssh_port: "22" }
+  post_tasks   :
+    - name: remove boto config
+      file:
+        path="{{ lookup('env', 'HOME') }}/.boto"
+        state="absent"
