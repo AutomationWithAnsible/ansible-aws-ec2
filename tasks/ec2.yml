@@ -2,6 +2,7 @@
 
 - name: ec2 | Provision a set of instances
   ec2:
+     state: "{{ aws_ec2_state | default(omit) }}"
      group: "{{ aws_ec2_group | default(omit) }}"
      group_id: "{{ aws_ec2_group_id | default(omit) }}"
      instance_type: "{{ aws_ec2_instance_type }}"
