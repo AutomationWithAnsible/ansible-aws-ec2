@@ -16,6 +16,7 @@
      instance_tags: "{{ aws_ec2_instance_tags | default(omit) }}"
      assign_public_ip: "{{ aws_ec2_assign_public_ip | default(omit) }}"
      vpc_subnet_id: "{{ aws_ec2_vpc_subnet_id | default(omit) }}"
+     source_dest_check: "{{ aws_ec2_source_dest_check | default(omit) }}"
      zone: "{{ aws_ec2_zone | default(omit) }}"
      volumes: "{{ aws_ec2_volumes | default(omit) }}"
      monitoring: "{{ aws_ec2_monitoring | default(omit) }}"
