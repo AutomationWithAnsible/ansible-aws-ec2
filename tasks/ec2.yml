@@ -22,6 +22,7 @@
      monitoring: "{{ aws_ec2_monitoring | default(omit) }}"
      aws_ec2_access_key: "{{ aws_ec2_access_key | default(omit) }}"
      aws_ec2_secret_key: "{{ aws_ec2_secret_key | default(omit) }}"
+     instance_profile_name: "{{ aws_ec2_instance_profile_name | default(omit) }}"
   connection: local
   delegate_to: localhost
   become: False
